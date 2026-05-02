@@ -16,9 +16,7 @@ public:
 
     Child(string name, string ssNum, int age, string favoriteToy)
         : Person(name, ssNum, age),
-          FavoriteToy(favoriteToy)
-    {
-    }
+          FavoriteToy(favoriteToy){}
 
     string getFavoriteToy() const { return FavoriteToy; }
 
