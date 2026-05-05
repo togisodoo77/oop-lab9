@@ -14,6 +14,13 @@ public:
 
     string getAnniversaryDate() const { return anniversaryDate; }
     void   setAnniversaryDate(string d) { anniversaryDate = d; }
+
+    void print() const override {
+        cout << "    [Spouse]" << endl;
+        Person::print();
+        cout << "    " << left << setw(18) << "Anniversary Date" << ": " << anniversaryDate << endl;
+    }
+     ~Spouse() {}
 };
 
 #endif

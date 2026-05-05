@@ -1,73 +1,56 @@
-// Lab09 - Employee Management System
-// UML диаграмын дагуу классуудын харилцаа хэрэгжүүлсэн
-
 #include <iostream>
 #include <vector>
 #include "Employee.h"
 using namespace std;
 
 int main() {
+    try {
+        Division divIT("Information Technology Division");
+        Division divHR("Human Resource Division");
+        Division divFin("Finance Division");
 
-    // ── Division объектууд (1..n хэрэглэнэ) ─────────────────────────────
-    Division divIT("Мэдээллийн технологийн хэлтэс");
-    Division divHR("Хүний нөөцийн хэлтэс");
-    Division divFin("Санхүүгийн хэлтэс");
+        JobDescription jdTeacher("Teacher / Associate Professor");
+        JobDescription jdMentor("Mentor");
+        JobDescription jdCEO("Chief Executive Officer");
+        JobDescription jdHR("HR Manager");
+        JobDescription jdAnalyst("Financial Analyst");
 
-    // ── JobDescription объектууд ─────────────────────────────────────────
-    JobDescription jdBagsh("Багш / Дэд профессор");
-    JobDescription jdMentor("Ментор");
-    JobDescription jdCEO("Гүйцэтгэх захирал");
-    JobDescription jdHR("HR менежер");
-    JobDescription jdAnalyst("Санхүүгийн шинжээч");
+        Employee bat("Bold", "NN001", 35,"EMP-001", "Senior Engineer", "2020-03-01", &divIT, &jdTeacher);
+        bat.addJobDescription(&jdMentor);
 
-    // ── Employee 1: Болд ─────────────────────────────────────────────────
-    // Байгуулагч дотор Division (1) ба нэг JobDescription (1..n) дамжуулна
-    Employee bat("Болд", "NN001", 35,
-                 "EMP-001", "Ахлах инженер", "2020-03-01",
-                 &divIT, &jdBagsh);
+        Spouse s1("Nomin", "NN002", 32, "2018-06-15");
+        bat.setSpouse(&s1);
 
-    bat.addJobDescription(&jdMentor); // 1..n: нэмэлт ажлын байр
+        Child c1("Temuulen", "NN010", 5, "Lego");
+        Child c2("Erdene", "NN011", 3, "Toy Car");
+        bat.addChild(c1);
+        bat.addChild(c2);
 
-    // 0..1: Гэр бүлийн хамтрагч тохируулах
-    Spouse s1("Номин", "NN002", 32, "2018-06-15");
-    bat.setSpouse(&s1);
+        Employee oyun("Oyun", "NN003", 28, "EMP-002", "HR Director", "2021-07-10", &divHR, &jdHR);
 
-    // 0..n: Хүүхдүүд нэмэх
-    Child c1("Тэмүүлэл", "NN010", 5, "Lego");
-    Child c2("Эрдэнэ",   "NN011", 3, "Машин");
-    bat.addChild(c1);
-    bat.addChild(c2);
+        Child c3("Anu", "NN012", 2, "Doll");
+        oyun.addChild(c3);
 
-    // ── Employee 2: Оюун ─────────────────────────────────────────────────
-    Employee oyun("Оюун", "NN003", 28,
-                  "EMP-002", "HR Дарга", "2021-07-10",
-                  &divHR, &jdHR);
+        Employee gan("Ganbayar", "NN004", 45, "EMP-003", "Director", "2015-01-01", &divFin, &jdCEO);
+        gan.addJobDescription(&jdAnalyst);
 
-    // Гэр бүлгүй (0..1 → null хэвээр)
-    // Хүүхэдтэй
-    Child c3("Ану", "NN012", 2, "Барби");
-    oyun.addChild(c3);
+        Spouse s2("Sarnai", "NN005", 42, "2005-09-20");
+        gan.setSpouse(&s2);
 
-    // ── Employee 3: Ганбаяр ──────────────────────────────────────────────
-    Employee gan("Ганбаяр", "NN004", 45,
-                 "EMP-003", "Захирал", "2015-01-01",
-                 &divFin, &jdCEO);
+        vector<Employee*> employees;
+        employees.push_back(&bat);
+        employees.push_back(&oyun);
+        employees.push_back(&gan);
 
-    gan.addJobDescription(&jdAnalyst); // 1..n
+        for (int i = 0; i < employees.size(); i++) {
+            employees[i]->print();
+        }
 
-    Spouse s2("Сарнай", "NN005", 42, "2005-09-20");
-    gan.setSpouse(&s2);
-    // Хүүхэдгүй (0..n → хоосон хэвээр)
-
-    // ── Бүх мэдээллийг хэвлэх ───────────────────────────────────────────
-    cout << "\n===== АЖИЛЧДЫН МЭДЭЭЛЭЛ =====" << endl;
-    bat.display();
-    oyun.display();
-    gan.display();
-
-    // ── vector-т Employee заагч хадгалах ────────────────────────────────
-    vector<Employee*> employees = { &bat, &oyun, &gan };
-    cout << "\nНийт ажилтны тоо: " << employees.size() << endl;
+        cout << "\nTotal number of employees: " << employees.size() << endl;
+    }
+    catch (const exception& e) {
+        cout << "Error: " << e.what() << endl;
+    }
 
     return 0;
 }

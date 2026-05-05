@@ -1,7 +1,9 @@
 #ifndef PERSON_H
 #define PERSON_H
 
+#include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 // Хүн - үндсэн эх класс
@@ -21,6 +23,14 @@ public:
     void setName(string n)  { name  = n; }
     void setSSNum(string s) { ssNum = s; }
     void setAge(int a)      { age   = a; }
+
+    virtual void print() const {
+        cout << "    " << left << setw(18) << "Name" << ": " << name << endl;
+        cout << "    " << left << setw(18) << "SSNum" << ": " << ssNum << endl;
+        cout << "    " << left << setw(18) << "Age" << ": " << age << endl;
+    }
+
+    virtual ~Person() {}
 };
 
 #endif
